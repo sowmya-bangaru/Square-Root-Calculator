@@ -2,6 +2,7 @@ import math
 import argparse
 
 def square_root_calculation(num):
+    print("inside function")
     # Check if the input number is non-negative
     if num < 0:
         raise ValueError("Input must be non-negative")
