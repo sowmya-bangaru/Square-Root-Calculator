@@ -3,7 +3,7 @@ import math
 import sys
 from io import StringIO
 from unittest.mock import patch
-from your_script import square_root_calculation
+from square_root_calculation import square_root_calculation
 
 # Test the square_root_calculation function
 def test_square_root_calculation():
