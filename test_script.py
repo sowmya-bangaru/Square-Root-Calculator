@@ -1,9 +1,11 @@
 import pytest
 import math
-import sys
 from io import StringIO
 from unittest.mock import patch
-from square_root_calculation import square_root_calculation
+import sys
+
+# Import the function from your script (assuming it's in the file `square_root_calculation.py`)
+from square_root_calculation import square_root_calculation, main
 
 # Test the square_root_calculation function
 def test_square_root_calculation():
@@ -23,37 +25,42 @@ def test_square_root_calculation():
     with pytest.raises(ValueError, match="Input must be non-negative"):
         square_root_calculation(-1)
 
-# Test the argparse part (simulating command-line input)
-@patch('sys.argv', ['square_root_calculation.py', '16'])
-@patch('sys.stdout', new_callable=StringIO)
+# Test the main script functionality (argparse part)
+@patch('sys.argv', ['square_root_calculation.py', '16'])  # Mock command-line args
+@patch('sys.stdout', new_callable=StringIO)  # Mock stdout to capture print output
 def test_script_square_root(mock_stdout, mock_argv):
-    # Import the script (which will execute the code)
-    import square_root_calculation
-
-    # Check if the output is correct
+    # Call the main function, which triggers argparse and square_root_calculation
+    main()
+    
+    # Capture the output printed by the script
     output = mock_stdout.getvalue().strip()
+
+    # Assert that the output is correct
     expected_output = "The square root of 16.0 is 4.0"
     assert output == expected_output, f"Expected '{expected_output}', but got '{output}'"
 
-@patch('sys.argv', ['square_root_calculation.py', '25'])
-@patch('sys.stdout', new_callable=StringIO)
+@patch('sys.argv', ['square_root_calculation.py', '25'])  # Mock command-line args
+@patch('sys.stdout', new_callable=StringIO)  # Mock stdout to capture print output
 def test_script_square_root_with_different_input(mock_stdout, mock_argv):
-    # Import the script (which will execute the code)
-    import square_root_calculation
-
-    # Check if the output is correct
+    # Call the main function, which triggers argparse and square_root_calculation
+    main()
+    
+    # Capture the output printed by the script
     output = mock_stdout.getvalue().strip()
+
+    # Assert that the output is correct
     expected_output = "The square root of 25.0 is 5.0"
     assert output == expected_output, f"Expected '{expected_output}', but got '{output}'"
 
-# Test the script for negative input
-@patch('sys.argv', ['square_root_calculation.py', '-9'])
-@patch('sys.stdout', new_callable=StringIO)
+@patch('sys.argv', ['square_root_calculation.py', '-9'])  # Mock command-line args for negative input
+@patch('sys.stdout', new_callable=StringIO)  # Mock stdout to capture print output
 def test_script_with_negative_input(mock_stdout, mock_argv):
-    # Import the script (which will execute the code)
-    import square_root_calculation
+    # Call the main function, which triggers argparse and square_root_calculation
+    main()
 
-    # Check if the error message is correct
+    # Capture the output printed by the script
     output = mock_stdout.getvalue().strip()
+
+    # Assert that the error message is correct
     expected_output = "Error: Input must be non-negative"
     assert output == expected_output, f"Expected '{expected_output}', but got '{output}'"
