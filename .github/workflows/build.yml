@@ -39,6 +39,7 @@ jobs:
     - name: SonarQube Scan
       uses: sonarsource/sonarqube-scan-action@v3
       with:
+        SONAR_SCANNER_OPTS: "-X"
         sonar-token: ${{ secrets.SONAR_TOKEN }}
         sonar-host-url: ${{ secrets.SONAR_HOST_URL }}
         additional_args: >
