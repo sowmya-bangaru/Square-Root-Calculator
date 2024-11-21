@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - name: Check SonarQube Server Reachability
-        run: curl -I ${{secrets.SONAR_HOST_URL}}
+        run: curl -I ${{ secrets.SONAR_HOST_URL }}
       - name: Analyze with SonarQube
 
         # You can pin the exact commit or the version.
