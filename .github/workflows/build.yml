@@ -37,14 +37,15 @@ jobs:
         key: ${{ runner.os }}-sonar-${{ hashFiles('**/*.py') }}
 
     - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@v3
-      env:
-          SONAR_SCANNER_OPTS: "-X"
-      with:
-        sonar-token: ${{ secrets.SONAR_TOKEN }}
-        sonar-host-url: ${{ secrets.SONAR_HOST_URL }}
-        additional_args: >
-          -Dsonar.junit.reportPaths=pytest-report.xml
+      run: |
+          curl -sSLo sonarqube-scanner.zip https://binaries.sonarsource.com/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip -q sonarqube-scanner.zip -d $HOME
+          $HOME/sonar-scanner-*/bin/sonar-scanner \
+            -Dsonar.projectKey=my-project-key \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          if [ $? -ne 0 ]; then exit 1; fi
 
     # Upload test results as artifact
     - name: Upload test result as artifact
